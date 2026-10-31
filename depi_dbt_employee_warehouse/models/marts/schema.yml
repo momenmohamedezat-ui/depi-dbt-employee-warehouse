@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: mart_department_salary_summary
+    description: "Department-level employee counts and salary summaries."
+    columns:
+      - name: department_id
+        data_tests:
+          - not_null
+          - unique
+      - name: employee_count
+        data_tests:
+          - not_null
+      - name: average_salary
+        data_tests:
+          - not_null

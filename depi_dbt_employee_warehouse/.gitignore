@@ -1,0 +1,15 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# dbt generated files
+target/
+dbt_packages/
+logs/
+.partial_parse.msgpack
+
+# Local secrets/config
+profiles.yml
+.env

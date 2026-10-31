@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: stg_employees
+    description: "Standardized employee records from the HR source."
+    columns:
+      - name: employee_id
+        description: "Source business identifier for an employee."
+        data_tests:
+          - not_null
+          - unique
+      - name: first_name
+        description: "Employee first name after trimming whitespace."
+        data_tests:
+          - not_null
+      - name: last_name
+        description: "Employee last name after trimming whitespace."
+        data_tests:
+          - not_null
+      - name: department_id
+        description: "Department reference from the source."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+      - name: country_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_countries')
+                field: country_id
+      - name: gender_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_genders')
+                field: gender_id
+      - name: salary
+        description: "Monthly salary in the demo dataset's unspecified currency."
+        data_tests:
+          - not_null
+          - positive_salary
+      - name: employment_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Active', 'On Leave', 'Inactive']
+
+  - name: stg_departments
+    description: "Standardized department reference data."
+    columns:
+      - name: department_id
+        data_tests:
+          - not_null
+          - unique
+      - name: department_name
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_countries
+    description: "Standardized country reference data."
+    columns:
+      - name: country_id
+        data_tests:
+          - not_null
+          - unique
+      - name: country_code
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_genders
+    description: "Standardized gender reference data."
+    columns:
+      - name: gender_id
+        data_tests:
+          - not_null
+          - unique
+      - name: gender_name
+        data_tests:
+          - not_null
+          - unique

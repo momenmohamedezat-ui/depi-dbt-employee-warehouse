@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: hr
+    description: "Source HR tables in the local DEPI_DBT_HR SQL Server database."
+    schema: dbo
+    tables:
+      - name: employees
+        description: "Demo employee records. All names and records are fictional."
+      - name: departments
+        description: "Department reference data."
+      - name: countries
+        description: "Country reference data."
+      - name: genders
+        description: "Gender reference data."

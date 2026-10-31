@@ -1,0 +1,130 @@
+version: 2
+
+models:
+  - name: dim_employee
+    description: "Employee dimension with a generated surrogate key and derived age."
+    columns:
+      - name: employee_key
+        data_tests:
+          - not_null
+          - unique
+      - name: employee_id
+        data_tests:
+          - not_null
+          - unique
+      - name: department_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_department')
+                field: department_id
+      - name: country_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_id
+      - name: gender_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_gender')
+                field: gender_id
+      - name: salary
+        data_tests:
+          - positive_salary
+
+  - name: dim_department
+    description: "Department dimension."
+    columns:
+      - name: department_key
+        data_tests:
+          - not_null
+          - unique
+      - name: department_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_country
+    description: "Country dimension."
+    columns:
+      - name: country_key
+        data_tests:
+          - not_null
+          - unique
+      - name: country_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_gender
+    description: "Gender dimension."
+    columns:
+      - name: gender_key
+        data_tests:
+          - not_null
+          - unique
+      - name: gender_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_date
+    description: "Distinct birth dates found in the demo employee source."
+    columns:
+      - name: date_key
+        data_tests:
+          - not_null
+          - unique
+      - name: full_date
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fact_employee
+    description: "Employee-grain analytical fact model; one row per employee."
+    columns:
+      - name: employee_id
+        data_tests:
+          - not_null
+          - unique
+      - name: employee_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_employee')
+                field: employee_key
+      - name: department_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_department')
+                field: department_key
+      - name: country_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_key
+      - name: gender_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_gender')
+                field: gender_key
+      - name: birth_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: salary
+        data_tests:
+          - not_null
+          - positive_salary

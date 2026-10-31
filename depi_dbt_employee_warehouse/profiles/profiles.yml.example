@@ -1,0 +1,16 @@
+
+depi_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: sqlserver
+      driver: "ODBC Driver 18 for SQL Server"
+      server: "localhost"
+      port: 1433
+      database: "DEPI_DBT_HR"
+      schema: "dbo"
+      user: "YOUR_SQL_USERNAME"
+      password: "YOUR_SQL_PASSWORD"
+      encrypt: true
+      trust_cert: true
+      threads: 4
